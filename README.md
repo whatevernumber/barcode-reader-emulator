@@ -9,10 +9,10 @@ Standalone Windows desktop app that emulates a barcode-reader device (acts like 
 - Download the executable from the latest [release](https://github.com/oxcafedead/barcode-reader-emulator/releases). 
 - Run it.
 - (Optional) Change the settings:
-    - To change the hotkey, click the "Change" button next to the Hotkey field. Select the keys for the new combination (you can select multiple special keys). Note that some combinations are already bound by the system and cannot be used.
-    - To parse an existing barcode on the screen, set the separate Hotkey or click the "Scan from the screen" button. The screen will be scanned automatically and the result placed into the "Value" field.
+    - To change a hotkey, click the "Change" button next to the "Hotkey" (default Ctrl + Alt + A) or "Scan hotkey" (default Ctrl + Alt + S) field. Select the keys for the new combination (you can select multiple special keys). Note that some combinations are already bound by the system and cannot be used. Hotkeys are saved and restored on the next launch.
+    - To parse an existing barcode on the screen, press the scan hotkey or click the "Scan from the screen" button. The screen will be scanned automatically and the result placed into the "Value" field.
 - Go to the target application (standalone app, browser tab, or any other place) where you want to test barcode input.
-- Press the hotkey.
+- Press the main hotkey.
 
 ## Screenshot
 ![Screenshot](docs/screenshot.jpg)
