@@ -37,7 +37,7 @@ func main() {
 
 	showScanResult := func(val string, err error) {
 		if err != nil {
-			walk.MsgBox(mainWnd, "Failed to scan", "Could not find or parse a barcode. Try to zoom in a bit or choose another one.\nParser error: "+err.Error(), walk.MsgBoxApplModal)
+			walk.MsgBox(mainWnd, "Failed to scan", "Could not find or parse a barcode. Try to zoom in a bit or choose another one.\nParser error: "+err.Error(), walk.MsgBoxApplModal|walk.MsgBoxSetForeground)
 		} else {
 			value.SetText(val)
 		}
