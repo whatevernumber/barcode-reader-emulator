@@ -59,7 +59,7 @@ func main() {
 		val, err := ScanScreenBarcode()
 
 		if err == nil {
-			beeep.Beep(beeep.DefaultFreq*2, beeep.DefaultDuration/4)
+			beeep.Beep(beeep.DefaultFreq*8, beeep.DefaultDuration/4)
 		}
 
 		mainWnd.Synchronize(func() {
