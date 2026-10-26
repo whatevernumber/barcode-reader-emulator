@@ -1,20 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
 	"golang.design/x/hotkey"
 )
 
-var bindingChan = make(chan *hotkey.Hotkey, 1)
-
 // Listen for the already bind hotkey event. Blocks the calling thread.
-func ListenForHotkey(actionCallback func()) {
-	binding := <-bindingChan
+func ListenForHotkey(bindings chan *hotkey.Hotkey, actionCallback func()) {
+	binding := <-bindings
 	for {
 		select {
-		case newBinding := <-bindingChan:
+		case newBinding := <-bindings:
 			if binding != newBinding {
 				err := binding.Unregister()
 				if err != nil {
@@ -37,7 +36,7 @@ func ListenForHotkey(actionCallback func()) {
 }
 
 // Creates a new binding for a hotkey with optional modifiers
-func SetNewBinding(modifierIndexes []int, keyIndex int) (string, error) {
+func SetNewBinding(bindings chan *hotkey.Hotkey, modifierIndexes []int, keyIndex int) (string, error) {
 	var hkMods = make([]hotkey.Modifier, len(modifierIndexes))
 	for i, selectedIdx := range modifierIndexes {
 		hkMods[i] = AllModifiers[selectedIdx]
@@ -49,7 +48,7 @@ func SetNewBinding(modifierIndexes []int, keyIndex int) (string, error) {
 		return "", err
 	}
 
-	bindingChan <- hkBind
+	bindings <- hkBind
 	return bindingToLabel(hkMods, key), nil
 }
 
@@ -133,4 +132,24 @@ func hotkeyToString(v hotkey.Key) string {
 	} else {
 		panic("unexpected key found: " + string(v))
 	}
+}
+
+func modifierToIndex(label string) (int, error) {
+	for i, modifier := range AllModifiers {
+		if modifierToString(modifier) == label {
+			return i, nil
+		}
+	}
+
+	return -1, fmt.Errorf("unknown modifier: %q", label)
+}
+
+func hotkeyToIndex(label string) (int, error) {
+	for i, key := range AllHotkeys {
+		if hotkeyToString(key) == label {
+			return i, nil
+		}
+	}
+
+	return -1, fmt.Errorf("unknown hotkey: %q", label)
 }
